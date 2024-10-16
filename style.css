@@ -71,5 +71,5 @@ li button {
 .concluida {
     text-decoration: line-through; /* Risca o texto */
     color: white; /* Cor do texto concluído */
-    background-color: gold; /* Cor de fundo verde para a tarefa concluída */
+    background-color: gol; /* Cor de fundo verde para a tarefa concluída */
 }

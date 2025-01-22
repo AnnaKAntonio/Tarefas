@@ -36,7 +36,7 @@ function moveToCompleted(button) {
     const taskId = taskElement.dataset.id;
 
     updateTaskStatus(taskId, 'completed');
-    taskElement.querySelector('.task-actions').remove();
+    taskElement.querySelector('.task-actions').innerHTML = '<button onclick="deleteTask(this)">Remover</button>';
     document.getElementById('completed').appendChild(taskElement);
 }
 
@@ -58,15 +58,13 @@ function renderTask(task) {
     taskElement.innerHTML = `
         <p>${task.description} <span class="responsible">(${task.responsible})</span></p>
         <div class="task-actions">
-            ${task.status === 'inProgress' ? '<button onclick="moveToCompleted(this)">Concluir</button>' : ''}
-            <button onclick="deleteTask(this)">Remover</button>
+            ${task.status === 'inProgress' ? '<button onclick="moveToCompleted(this)">Concluir</button>' : '<button onclick="deleteTask(this)">Remover</button>'}
         </div>
     `;
 
     if (task.status === 'inProgress') {
         document.getElementById('inProgress').appendChild(taskElement);
     } else {
-        taskElement.querySelector('.task-actions').remove();
         document.getElementById('completed').appendChild(taskElement);
     }
 }

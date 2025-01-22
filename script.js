@@ -20,7 +20,8 @@ function addTask() {
     const task = {
         description: taskDescription,
         responsible: taskResponsible,
-        status: 'inProgress'
+        status: 'inProgress',
+        observation: ''
     };
 
     saveTask(task);
@@ -49,6 +50,17 @@ function deleteTask(button) {
     taskElement.remove();
 }
 
+// Função para salvar a observação
+function saveObservation(textarea, taskId) {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex > -1) {
+        tasks[taskIndex].observation = textarea.value;
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+}
+
 // Renderizar uma tarefa
 function renderTask(task) {
     const taskElement = document.createElement('div');
@@ -57,6 +69,7 @@ function renderTask(task) {
 
     taskElement.innerHTML = `
         <p>${task.description} <span class="responsible">(${task.responsible})</span></p>
+        <textarea class="observation" placeholder="Adicionar observação..." onblur="saveObservation(this, '${task.id}')">${task.observation || ''}</textarea>
         <div class="task-actions">
             ${task.status === 'inProgress' ? '<button onclick="moveToCompleted(this)">Concluir</button>' : '<button onclick="deleteTask(this)">Remover</button>'}
         </div>

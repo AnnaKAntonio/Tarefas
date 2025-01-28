@@ -9,8 +9,8 @@ updateClock();
 
 // Função para adicionar uma tarefa
 function addTask() {
-    const taskDescription = document.getElementById('taskDescription').value;
-    const taskResponsible = document.getElementById('taskResponsible').value;
+    const taskDescription = document.getElementById('taskDescription').value.trim();
+    const taskResponsible = document.getElementById('taskResponsible').value.trim();
 
     if (!taskDescription || !taskResponsible) {
         alert('Por favor, preencha todos os campos.');
@@ -18,6 +18,7 @@ function addTask() {
     }
 
     const task = {
+        id: Date.now().toString(), // Gerar um ID único
         description: taskDescription,
         responsible: taskResponsible,
         status: 'inProgress',
@@ -85,10 +86,7 @@ function renderTask(task) {
 // Salvar tarefa no localStorage
 function saveTask(task) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-    task.id = Date.now().toString(); // Gerar um ID único
     tasks.push(task);
-
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
@@ -107,7 +105,6 @@ function updateTaskStatus(id, status) {
 function deleteTaskFromStorage(id) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const updatedTasks = tasks.filter(task => task.id !== id);
-
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 }
 
